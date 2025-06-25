@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gemini Veo 3 Prompt Generator</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#28a745" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      max-width: 100%;
+      min-height: 100vh;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 14px;
+      font-size: 16px;
+      color: white;
+      background-color: #28a745;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    @media (max-width: 480px) {
+      .container { padding: 15px; }
+      textarea, input[type="text"], button { font-size: 14px; }
+    }
+  </style>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Gemini Veo 3 Prompt Generator</h2>
+    <label for="description">Describe the Scene or Subject:</label>
+    <textarea id="description" rows="4" placeholder="e.g. a young woman dancing at sunset on the beach..."></textarea>
+    <label for="style">Style or Theme:</label>
+    <input type="text" id="style" placeholder="e.g. cinematic, neon, vintage, dreamy">
+    <label for="camera">Camera Details (Optional):</label>
+    <input type="text" id="camera" placeholder="e.g. 35mm lens, fisheye, wide-angle">
+    <button onclick="generatePrompt()">Generate Prompt</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function generatePrompt() {
+      const description = document.getElementById('description').value.trim();
+      const style = document.getElementById('style').value.trim();
+      const camera = document.getElementById('camera').value.trim();
+      let prompt = `A ${description}`;
+      if (style) prompt += `, in ${style} style`;
+      if (camera) prompt += `, captured with ${camera}`;
+      prompt += ", 9:16 vertical frame, ultra realistic, motion-rich, vivid light.";
+      document.getElementById('result').innerHTML = `<strong>Generated Prompt:</strong><br>${prompt}`;
+    }
+  </script>
+</body>
+</html>
